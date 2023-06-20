@@ -51,9 +51,7 @@ public class RNPushNotification extends ReactContextBaseJavaModule implements Ac
   
     public static ArrayList<RNIntentHandler> IntentHandlers = new ArrayList();
 
-    private RNPushNotificationHelper mRNPushNotificationHelper;
     private final SecureRandom mRandomNumberGenerator = new SecureRandom();
-    private RNPushNotificationJsDelivery mJsDelivery;
 
     public RNPushNotification(ReactApplicationContext reactContext) {
         super(reactContext);
@@ -61,11 +59,6 @@ public class RNPushNotification extends ReactContextBaseJavaModule implements Ac
         reactContext.addActivityEventListener(this);
 
         Application applicationContext = (Application) reactContext.getApplicationContext();
-
-        // The @ReactNative methods use this
-        mRNPushNotificationHelper = new RNPushNotificationHelper(applicationContext);
-        // This is used to delivery callbacks to JS
-        mJsDelivery = new RNPushNotificationJsDelivery(reactContext);
     }
 
     @Override
@@ -110,9 +103,6 @@ public class RNPushNotification extends ReactContextBaseJavaModule implements Ac
         }
         
         Bundle bundle = this.getBundleFromIntent(intent);
-        if (bundle != null) {
-            mJsDelivery.notifyNotification(bundle);
-        }
     }
 
     @ReactMethod
@@ -122,21 +112,16 @@ public class RNPushNotification extends ReactContextBaseJavaModule implements Ac
         if (data != null) {
             bundle = Arguments.toBundle(data);
         }
-
-        mRNPushNotificationHelper.invokeApp(bundle);
     }
 
     @ReactMethod
     public void checkPermissions(Promise promise) {
-        ReactContext reactContext = getReactApplicationContext();
-        NotificationManagerCompat managerCompat = NotificationManagerCompat.from(reactContext);
-        promise.resolve(managerCompat.areNotificationsEnabled());
+        Log.i(LOG_TAG," fake check permissions");
     }
 
     @ReactMethod
     public void requestPermissions() {
-      final RNPushNotificationJsDelivery fMjsDelivery = mJsDelivery;
-      
+
       FirebaseMessaging.getInstance().getToken()
               .addOnCompleteListener(new OnCompleteListener<String>() {
                   @Override
@@ -148,7 +133,6 @@ public class RNPushNotification extends ReactContextBaseJavaModule implements Ac
 
                       WritableMap params = Arguments.createMap();
                       params.putString("deviceToken", task.getResult());
-                      fMjsDelivery.sendEvent("remoteNotificationsRegistered", params);
                   }
               });
     }
@@ -165,42 +149,24 @@ public class RNPushNotification extends ReactContextBaseJavaModule implements Ac
 
     @ReactMethod
     public void presentLocalNotification(ReadableMap details) {
-        Bundle bundle = Arguments.toBundle(details);
-        // If notification ID is not provided by the user, generate one at random
-        if (bundle.getString("id") == null) {
-            bundle.putString("id", String.valueOf(mRandomNumberGenerator.nextInt()));
-        }
-        mRNPushNotificationHelper.sendToNotificationCentre(bundle);
+        Log.i(LOG_TAG, "fake presentLocalNotification");
     }
 
     @ReactMethod
     public void scheduleLocalNotification(ReadableMap details) {
-        Bundle bundle = Arguments.toBundle(details);
-        // If notification ID is not provided by the user, generate one at random
-        if (bundle.getString("id") == null) {
-            bundle.putString("id", String.valueOf(mRandomNumberGenerator.nextInt()));
-        }
-        mRNPushNotificationHelper.sendNotificationScheduled(bundle);
+        Log.i(LOG_TAG, "fake scheduleLocalNotification");
     }
 
     @ReactMethod
     public void getInitialNotification(Promise promise) {
-        WritableMap params = Arguments.createMap();
-        Activity activity = getCurrentActivity();
-        if (activity != null) {
-            Bundle bundle = this.getBundleFromIntent(activity.getIntent());
-            if (bundle != null) {
-                bundle.putBoolean("foreground", false);
-                String bundleString = mJsDelivery.convertJSON(bundle);
-                params.putString("dataJSON", bundleString);
-            }
-        }
-        promise.resolve(params);
+        Log.i(LOG_TAG, "fake getInitialNotification");
+
     }
 
     @ReactMethod
     public void setApplicationIconBadgeNumber(int number) {
         ApplicationBadgeHelper.INSTANCE.setApplicationIconBadgeNumber(getReactApplicationContext(), number);
+        Log.i(LOG_TAG, "for real setApplicationIconBadgeNumber");
     }
 
     // removed @Override temporarily just to get it working on different versions of RN
@@ -220,8 +186,7 @@ public class RNPushNotification extends ReactContextBaseJavaModule implements Ac
      *
      */
     public void cancelAllLocalNotifications() {
-        mRNPushNotificationHelper.cancelAllScheduledNotifications();
-        mRNPushNotificationHelper.clearNotifications();
+        Log.i(LOG_TAG, "fake cancelAllLocalNotifications");
     }
 
     @ReactMethod
@@ -230,7 +195,7 @@ public class RNPushNotification extends ReactContextBaseJavaModule implements Ac
      *
      */
     public void cancelLocalNotification(String notification_id) {
-        mRNPushNotificationHelper.cancelScheduledNotification(notification_id);
+        Log.i(LOG_TAG, "fake cancelLocalNotification");
     }
 
     @ReactMethod
@@ -238,7 +203,7 @@ public class RNPushNotification extends ReactContextBaseJavaModule implements Ac
      * Clear notification from the notification centre.
      */
     public void clearLocalNotification(String tag, int notificationID) {
-        mRNPushNotificationHelper.clearNotification(tag, notificationID);
+        Log.i(LOG_TAG, "fake clearLocalNotification");
     }
 
     @ReactMethod
@@ -247,7 +212,7 @@ public class RNPushNotification extends ReactContextBaseJavaModule implements Ac
      *
      */
     public void removeAllDeliveredNotifications() {
-      mRNPushNotificationHelper.clearNotifications();
+        Log.i(LOG_TAG, "fake removeAllDeliveredNotifications");
     }
 
     @ReactMethod
@@ -255,7 +220,7 @@ public class RNPushNotification extends ReactContextBaseJavaModule implements Ac
      * Returns a list of all notifications currently in the Notification Center
      */
     public void getDeliveredNotifications(Callback callback) {
-        callback.invoke(mRNPushNotificationHelper.getDeliveredNotifications());
+        Log.i(LOG_TAG, "fake getDeliveredNotifications");
     }
 
     @ReactMethod
@@ -263,7 +228,7 @@ public class RNPushNotification extends ReactContextBaseJavaModule implements Ac
      * Returns a list of all currently scheduled notifications
      */
     public void getScheduledLocalNotifications(Callback callback) {
-        callback.invoke(mRNPushNotificationHelper.getScheduledLocalNotifications());
+        Log.i(LOG_TAG, "fake getScheduledLocalNotifications");
     }
 
     @ReactMethod
@@ -272,7 +237,7 @@ public class RNPushNotification extends ReactContextBaseJavaModule implements Ac
      * an element in the provided array
      */
     public void removeDeliveredNotifications(ReadableArray identifiers) {
-      mRNPushNotificationHelper.clearDeliveredNotifications(identifiers);
+        Log.i(LOG_TAG, "fake removeDeliveredNotifications");
     }
 
     @ReactMethod
@@ -289,11 +254,7 @@ public class RNPushNotification extends ReactContextBaseJavaModule implements Ac
      * List all channels id
      */
     public void getChannels(Callback callback) {
-      WritableArray array = Arguments.fromList(mRNPushNotificationHelper.listChannels());
-      
-      if(callback != null) {
-        callback.invoke(array);
-      }
+        Log.i(LOG_TAG, "fake getChannels");
     }
 
     @ReactMethod
@@ -301,11 +262,7 @@ public class RNPushNotification extends ReactContextBaseJavaModule implements Ac
      * Check if channel exists with a given id
      */
     public void channelExists(String channel_id, Callback callback) {
-      boolean exists = mRNPushNotificationHelper.channelExists(channel_id);
-
-      if(callback != null) {
-        callback.invoke(exists);
-      }
+        Log.i(LOG_TAG, "fake channelExists");
     }
 
     @ReactMethod
@@ -313,11 +270,7 @@ public class RNPushNotification extends ReactContextBaseJavaModule implements Ac
      * Creates a channel if it does not already exist. Returns whether the channel was created.
      */
     public void createChannel(ReadableMap channelInfo, Callback callback) {
-      boolean created = mRNPushNotificationHelper.createChannel(channelInfo);
-
-      if(callback != null) {
-        callback.invoke(created);
-      }
+        Log.i(LOG_TAG, "fake createChannel");
     }
 
     @ReactMethod
@@ -325,11 +278,7 @@ public class RNPushNotification extends ReactContextBaseJavaModule implements Ac
      * Check if channel is blocked with a given id
      */
     public void channelBlocked(String channel_id, Callback callback) {
-      boolean blocked = mRNPushNotificationHelper.channelBlocked(channel_id);
-
-      if(callback != null) {
-        callback.invoke(blocked);
-      }
+        Log.i(LOG_TAG, "fake channelBlocked");
     }
 
     @ReactMethod
@@ -337,6 +286,6 @@ public class RNPushNotification extends ReactContextBaseJavaModule implements Ac
      * Delete channel with a given id
      */
     public void deleteChannel(String channel_id) {
-      mRNPushNotificationHelper.deleteChannel(channel_id);
+        Log.i(LOG_TAG, "fake deleteChannel");
     }
 }
