@@ -19,6 +19,5 @@ public class RNPushNotificationBootEventReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         Log.i(LOG_TAG, "RNPushNotificationBootEventReceiver loading scheduled notifications");
-        }
     }
 }
