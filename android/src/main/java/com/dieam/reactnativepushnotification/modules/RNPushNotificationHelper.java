@@ -103,8 +103,7 @@ public class RNPushNotificationHelper {
 
     private PendingIntent toScheduleNotificationIntent(Bundle bundle) {
         try {
-            int notificationID = Integer.parseInt(bundle.getString("id"));
-            Log.d(LOG_TAG, notificationID);
+            Log.d(LOG_TAG, bundle.getString("id"));
         } catch (Exception e) {
             Log.e(LOG_TAG, "Unable to parse Notification ID", e);
         }
