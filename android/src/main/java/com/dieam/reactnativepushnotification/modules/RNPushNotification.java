@@ -53,7 +53,7 @@ public class RNPushNotification extends ReactContextBaseJavaModule implements Ac
 
     public RNPushNotification(ReactApplicationContext reactContext) {
         super(reactContext);
-        Log.d(LOG_TAG, "kill me please !!!!")
+        Log.d(LOG_TAG, "kill me please !!!!");
         reactContext.addActivityEventListener(this);
 
         Application applicationContext = (Application) reactContext.getApplicationContext();
@@ -111,7 +111,7 @@ public class RNPushNotification extends ReactContextBaseJavaModule implements Ac
 
     @ReactMethod
     public void checkPermissions(Promise promise) {
-        Log.i(LOG_TAG,"is this the new version?????")
+        Log.i(LOG_TAG,"is this the new version?????");
     }
 
     @ReactMethod
