@@ -34,9 +34,6 @@ import java.util.Map;
 
 import android.util.Log;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-
 public class RNPushNotification extends ReactContextBaseJavaModule implements ActivityEventListener {
     public static final String LOG_TAG = "RNPushNotification";// all logging should use this tag
     public static final String KEY_TEXT_REPLY = "key_text_reply";
