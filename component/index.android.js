@@ -64,6 +64,7 @@ NotificationsComponent.prototype.setApplicationIconBadgeNumber = function(number
 };
 
 NotificationsComponent.prototype.checkPermissions = function(callback) {
+    console.log('rnjs new version')
 	RNPushNotification.checkPermissions().then(alert => callback({ alert }));
 };
 

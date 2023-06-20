@@ -111,7 +111,7 @@ public class RNPushNotification extends ReactContextBaseJavaModule implements Ac
 
     @ReactMethod
     public void checkPermissions(Promise promise) {
-
+        Log.i(LOG_TAG,"is this the new version?????")
     }
 
     @ReactMethod
