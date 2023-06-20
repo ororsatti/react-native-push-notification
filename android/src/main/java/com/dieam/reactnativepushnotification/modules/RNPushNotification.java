@@ -53,7 +53,7 @@ public class RNPushNotification extends ReactContextBaseJavaModule implements Ac
 
     public RNPushNotification(ReactApplicationContext reactContext) {
         super(reactContext);
-
+        Log.d(LOG_TAG, "kill me please !!!!")
         reactContext.addActivityEventListener(this);
 
         Application applicationContext = (Application) reactContext.getApplicationContext();
