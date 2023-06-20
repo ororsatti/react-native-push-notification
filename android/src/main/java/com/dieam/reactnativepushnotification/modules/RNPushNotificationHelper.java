@@ -104,14 +104,7 @@ public class RNPushNotificationHelper {
     private PendingIntent toScheduleNotificationIntent(Bundle bundle) {
         try {
             int notificationID = Integer.parseInt(bundle.getString("id"));
-
-            Intent notificationIntent = new Intent(context, RNPushNotificationPublisher.class);
-            notificationIntent.putExtra(RNPushNotificationPublisher.NOTIFICATION_ID, notificationID);
-            notificationIntent.putExtras(bundle);
-
-            int flags = Build.VERSION.SDK_INT >= Build.VERSION_CODES.S ? PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_MUTABLE : PendingIntent.FLAG_UPDATE_CURRENT;
-
-            return PendingIntent.getBroadcast(context, notificationID, notificationIntent, flags);
+            Log.d(LOG_Tag, notificationID);
         } catch (Exception e) {
             Log.e(LOG_TAG, "Unable to parse Notification ID", e);
         }
@@ -186,15 +179,7 @@ public class RNPushNotificationHelper {
 
 
     public void sendToNotificationCentre(final Bundle bundle) {
-      RNPushNotificationPicturesAggregator aggregator = new RNPushNotificationPicturesAggregator(new RNPushNotificationPicturesAggregator.Callback() {
-        public void call(Bitmap largeIconImage, Bitmap bigPictureImage, Bitmap bigLargeIconImage) {
-          sendToNotificationCentreWithPicture(bundle, largeIconImage, bigPictureImage, bigLargeIconImage);
-        }
-      });
-
-      aggregator.setLargeIconUrl(context, bundle.getString("largeIconUrl"));
-      aggregator.setBigLargeIconUrl(context, bundle.getString("bigLargeIconUrl"));
-      aggregator.setBigPictureUrl(context, bundle.getString("bigPictureUrl"));
+        Log.i(LOG_TAG,'sendToNotificationCentre');
     }
 
     public void sendToNotificationCentreWithPicture(Bundle bundle, Bitmap largeIconBitmap, Bitmap bigPictureBitmap, Bitmap bigLargeIconBitmap) {
