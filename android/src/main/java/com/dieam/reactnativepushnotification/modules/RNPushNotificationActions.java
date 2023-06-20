@@ -58,10 +58,6 @@ public class RNPushNotificationActions extends BroadcastReceiver {
 
       // Notify the action.
       if(invokeApp) {
-          RNPushNotificationHelper helper = new RNPushNotificationHelper((Application) context.getApplicationContext());
-
-          helper.invokeApp(bundle);
-
           context.sendBroadcast(new Intent(Intent.ACTION_CLOSE_SYSTEM_DIALOGS));
       } else {
 
