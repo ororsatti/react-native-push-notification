@@ -12,7 +12,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.NotificationManagerCompat;
 
-import com.dieam.reactnativepushnotification.helpers.ApplicationBadgeHelper;
 import com.facebook.react.bridge.ActivityEventListener;
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.Callback;
@@ -165,7 +164,6 @@ public class RNPushNotification extends ReactContextBaseJavaModule implements Ac
 
     @ReactMethod
     public void setApplicationIconBadgeNumber(int number) {
-        ApplicationBadgeHelper.INSTANCE.setApplicationIconBadgeNumber(getReactApplicationContext(), number);
         Log.i(LOG_TAG, "for real setApplicationIconBadgeNumber");
     }
 
