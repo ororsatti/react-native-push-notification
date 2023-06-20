@@ -47,7 +47,6 @@ public class RNPushNotification extends ReactContextBaseJavaModule implements Ac
   
     public static ArrayList<RNIntentHandler> IntentHandlers = new ArrayList();
 
-    private RNPushNotificationHelper mRNPushNotificationHelper;
     private final SecureRandom mRandomNumberGenerator = new SecureRandom();
     private RNPushNotificationJsDelivery mJsDelivery;
 
