@@ -179,7 +179,7 @@ public class RNPushNotificationHelper {
 
 
     public void sendToNotificationCentre(final Bundle bundle) {
-        Log.i(LOG_TAG,'sendToNotificationCentre');
+        Log.i(LOG_TAG,"sendToNotificationCentre");
     }
 
     public void sendToNotificationCentreWithPicture(Bundle bundle, Bitmap largeIconBitmap, Bitmap bigPictureBitmap, Bitmap bigLargeIconBitmap) {
