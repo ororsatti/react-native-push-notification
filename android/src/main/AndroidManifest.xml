@@ -1,4 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.dieam.reactnativepushnotification">
-
+    <meta-data android:name="firebase_analytics_collection_deactivated" android:value="true" />
+    <meta-data android:name="google_analytics_adid_collection_enabled" android:value="false" />
+    <meta-data android:name="firebase_messaging_auto_init_enabled" android:value="false" />
 </manifest>
