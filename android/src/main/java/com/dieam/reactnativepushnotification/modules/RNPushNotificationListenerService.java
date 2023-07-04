@@ -25,13 +25,22 @@ public class RNPushNotificationListenerService extends FirebaseMessagingService 
         super();
         this.mMessageReceivedHandler = new RNReceivedMessageHandler(this);
     }
-
     public RNPushNotificationListenerService(FirebaseMessagingService delegate) {
         super();
         this.mFirebaseServiceDelegate = delegate;
         this.mMessageReceivedHandler = new RNReceivedMessageHandler(delegate);
     }
+    @Override
+    public void handleIntent(Intent intent) {
 
+        String action = intent.getAction();
+        Bundle data = intent.getExtras();
+        data.remove("androidx.content.wakelockid");
+        if (NotificationParams.isNotification(data)) {
+            NotificationParams params = new NotificationParams(data);
+        }
+        onMessageReceived(new RemoteMessage(data));
+    }
     @Override
     public void onNewToken(String token) {
         final String deviceToken = token;
