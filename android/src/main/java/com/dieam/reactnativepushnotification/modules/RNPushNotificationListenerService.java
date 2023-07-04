@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
+import android.os.Bundle;
 
 import com.facebook.react.ReactApplication;
 import com.facebook.react.ReactInstanceManager;
