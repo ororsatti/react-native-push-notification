@@ -39,7 +39,7 @@ public class RNPushNotificationListenerService extends FirebaseMessagingService 
     public void handleIntent(Intent intent){
         intent.putExtra(Constants.AnalyticsKeys.ENABLED, "0");
         String enabled =  intent.getStringExtra(Constants.AnalyticsKeys.ENABLED);
-        Log.i(TAG, "handleIntent: "+ enabled);
+        Log.i(LOG_TAG, "firebase service disabling analytics: "+ enabled);
         super.handleIntent(intent);
     }
     @Override
