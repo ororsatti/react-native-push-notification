@@ -3,6 +3,7 @@ package com.dieam.reactnativepushnotification.modules;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 import com.google.firebase.messaging.NotificationParams;
+import com.google.firebase.messaging.Constants;
 
 import android.content.Intent;
 import android.os.Handler;
